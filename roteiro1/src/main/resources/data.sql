@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS task;
 
 CREATE TABLE task (
     task_Id INT AUTO_INCREMENT PRIMARY KEY,
-    task_Title varchar(30) NOT NULL,
+    task_Title varchar(100) NOT NULL,
     task_Desc varchar(250),
     task_Status tinyint NOT NULL
 );
