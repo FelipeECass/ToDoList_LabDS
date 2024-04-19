@@ -5,13 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-@Entity
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @Table(name = "task")
 @Schema(description = "Informações da tarefa")
-public class Task {
+public class Task implements ITask {
     public enum Status {
         Pendente, Finalizada;
     }
@@ -41,7 +41,10 @@ public class Task {
         taskTitle = p_title;
         taskStatus = Status.Pendente;
     }
-
+    @Override
+    public Integer getId() {
+        return taskId;
+    }
     @Override
     public String toString() {
         return "Task [id = " + taskId + ", title=" + taskTitle + ", description=" + taskDesc + ", status=" + taskStatus + "]";

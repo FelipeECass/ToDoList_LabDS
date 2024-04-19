@@ -3,31 +3,20 @@ package com.labdesoft.roteiro1.service;
 import com.labdesoft.roteiro1.entity.Task;
 import com.labdesoft.roteiro1.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TaskService {
-    @Autowired
-    private TaskRepository m_taskRepository;
+public class TaskService extends TaskDefaultService<Task, Integer> {
 
-    public List<Task> getAllTask()
+    public TaskService(TaskRepository p_taskRepository)
     {
-        return m_taskRepository.findAll();
-    }
-    public String createTask(Task p_task)
-    {
-        m_taskRepository.save(p_task);
-        return "Task criada com Sucesso";
+        m_taskRepository = p_taskRepository;
     }
 
-    public String editTask(Task p_task)
-    {
+    @Override
+    protected Task editTaskParameters(Task p_task) {
         Optional<Task> v_taskToModify = m_taskRepository.findById(p_task.getTaskId());
 
         if(v_taskToModify.isPresent())
@@ -40,9 +29,8 @@ public class TaskService {
                 v_taskToModify.get().setTaskStatus(p_task.getTaskStatus());
         }else
         {
-            return "Task buscada não existe.";
+            return null;
         }
-        m_taskRepository.save(v_taskToModify.get());
-        return "Modificação feita com sucesso.";
+        return v_taskToModify.get();
     }
 }

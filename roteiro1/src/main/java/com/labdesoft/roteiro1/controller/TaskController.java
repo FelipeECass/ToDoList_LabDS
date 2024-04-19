@@ -15,8 +15,11 @@ import java.util.List;
 @RequestMapping("/task")
 public class TaskController {
 
-    @Autowired
-    private TaskService m_taskService;
+    private final TaskService m_taskService;
+    public TaskController(TaskService p_taskService)
+    {
+        m_taskService = p_taskService;
+    }
 
     @GetMapping("/listAll")
     @Operation(summary = "Lista todas as tarefas da lista")
