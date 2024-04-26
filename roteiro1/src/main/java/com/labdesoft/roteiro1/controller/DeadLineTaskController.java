@@ -1,7 +1,7 @@
 package com.labdesoft.roteiro1.controller;
 
-import com.labdesoft.roteiro1.entity.Task;
-import com.labdesoft.roteiro1.service.TaskService;
+import com.labdesoft.roteiro1.entity.DeadLineTask;
+import com.labdesoft.roteiro1.service.DeadLineTaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,25 +11,24 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task")
-public class TaskController {
-
-    private final TaskService m_taskService;
-    public TaskController(TaskService p_taskService)
+@RequestMapping("/deadLineTask")
+public class DeadLineTaskController {
+    private final DeadLineTaskService m_deadLineTaskService;
+    public DeadLineTaskController(DeadLineTaskService p_deadLineTaskService)
     {
-        m_taskService = p_taskService;
+        m_deadLineTaskService = p_deadLineTaskService;
     }
 
-    @GetMapping(value = {"/listAll", ""})
+    @GetMapping()
     @Operation(summary = "Lista todas as tarefas da lista")
-    public ResponseEntity<List<Task>> listAll()
+    public ResponseEntity<List<DeadLineTask>> listAll()
     {
         try
         {
-            List<Task> v_listOfTask = m_taskService.getAllTask();
-            if(v_listOfTask == null)
+            List<DeadLineTask> v_listOfDeadLineTask = m_deadLineTaskService.getAllTask();
+            if(v_listOfDeadLineTask == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(v_listOfTask, HttpStatus.OK);
+            return new ResponseEntity<>(v_listOfDeadLineTask, HttpStatus.OK);
         }
         catch(Exception ex)
         {
@@ -37,13 +36,13 @@ public class TaskController {
         }
     }
 
-    @PostMapping(value= {"/create",""})
+    @PostMapping()
     @Operation(summary = "Cria nova tarefa")
-    public ResponseEntity<String> create(@ModelAttribute Task task)
+    public ResponseEntity<String> create(@ModelAttribute DeadLineTask deadLineTask)
     {
         try
         {
-            return new ResponseEntity<>(m_taskService.createTask(task),HttpStatus.OK);
+            return new ResponseEntity<>(m_deadLineTaskService.createTask(deadLineTask),HttpStatus.OK);
         }
         catch(Exception ex)
         {
@@ -51,13 +50,13 @@ public class TaskController {
         }
     }
 
-    @PutMapping(value = {"/setTaskAsComplete","/setTaskAsPending",""})
+    @PutMapping()
     @Operation(summary = "Muda o status da tarefa")
-    public ResponseEntity<String> edit(@ModelAttribute Task task)
+    public ResponseEntity<String> edit(@ModelAttribute DeadLineTask deadLineTask)
     {
         try
         {
-            return new ResponseEntity<>(m_taskService.editTask(task),HttpStatus.OK);
+            return new ResponseEntity<>(m_deadLineTaskService.editTask(deadLineTask),HttpStatus.OK);
         }
         catch(Exception ex)
         {

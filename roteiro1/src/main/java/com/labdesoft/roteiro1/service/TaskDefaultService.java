@@ -13,8 +13,7 @@ public abstract class TaskDefaultService<Entity extends ITask, TypeId> {
     {
         return m_taskRepository.findAll();
     }
-    public String createTask(Entity p_task)
-    {
+    public String createTask(Entity p_task) throws Exception {
         m_taskRepository.save(p_task);
         return "Task criada com Sucesso";
     }
@@ -32,4 +31,5 @@ public abstract class TaskDefaultService<Entity extends ITask, TypeId> {
     }
 
     protected abstract Entity editTaskParameters(Entity p_task);
+
 }

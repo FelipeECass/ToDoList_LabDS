@@ -13,7 +13,7 @@ import lombok.*;
 @Schema(description = "Informações da tarefa")
 public class Task implements ITask {
     public enum Status {
-        Pendente, Finalizada;
+        Pendente, Finalizada
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +29,6 @@ public class Task implements ITask {
         taskTitle = p_title;
         taskDesc = p_desc;
         taskStatus = p_status;
-    }
-    public Task(String p_title, Status p_status)
-    {
-        taskTitle = p_title;
-        taskStatus = p_status;
-    }
-
-    public Task(String p_title)
-    {
-        taskTitle = p_title;
-        taskStatus = Status.Pendente;
     }
     @Override
     public Integer getId() {

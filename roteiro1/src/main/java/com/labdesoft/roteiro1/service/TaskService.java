@@ -2,7 +2,6 @@ package com.labdesoft.roteiro1.service;
 
 import com.labdesoft.roteiro1.entity.Task;
 import com.labdesoft.roteiro1.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
