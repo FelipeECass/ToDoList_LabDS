@@ -16,7 +16,7 @@ public class TaskService extends TaskDefaultService<Task, Integer> {
 
     @Override
     protected Task editTaskParameters(Task p_task) {
-        Optional<Task> v_taskToModify = m_taskRepository.findById(p_task.getTaskId());
+        Optional<Task> v_taskToModify = m_taskRepository.findById(p_task.getId());
 
         if(v_taskToModify.isPresent())
         {

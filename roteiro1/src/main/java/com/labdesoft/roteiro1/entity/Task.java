@@ -1,15 +1,16 @@
 package com.labdesoft.roteiro1.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "task")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Schema(description = "Informações da tarefa")
 public class Task implements ITask {
     public enum Status {
@@ -17,26 +18,12 @@ public class Task implements ITask {
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer taskId;
+    @JsonProperty("taskId")
+    private Integer Id;
     @Column(nullable = false)
     private String taskTitle;
     @Column(nullable = true)
     private String taskDesc;
     @Column(nullable = false)
     private Status taskStatus;
-    public Task(String p_title, String p_desc, Status p_status)
-    {
-        taskTitle = p_title;
-        taskDesc = p_desc;
-        taskStatus = p_status;
-    }
-    @Override
-    public Integer getId() {
-        return taskId;
-    }
-    @Override
-    public String toString() {
-        return "Task [id = " + taskId + ", title=" + taskTitle + ", description=" + taskDesc + ", status=" + taskStatus + "]";
-    }
-
 }

@@ -24,7 +24,7 @@ public class DateTaskService extends TaskDefaultService<DateTask, Integer>{
     }
     @Override
     protected DateTask editTaskParameters(DateTask p_task) {
-        Optional<DateTask> v_dateTaskToModify = m_taskRepository.findById(p_task.getTaskId());
+        Optional<DateTask> v_dateTaskToModify = m_taskRepository.findById(p_task.getId());
 
         if(v_dateTaskToModify.isPresent())
         {

@@ -16,7 +16,7 @@ public class DeadLineTaskService extends TaskDefaultService<DeadLineTask, Intege
 
     @Override
     protected DeadLineTask editTaskParameters(DeadLineTask p_task) {
-        Optional<DeadLineTask> v_deadLineTaskToModify = m_taskRepository.findById(p_task.getTaskId());
+        Optional<DeadLineTask> v_deadLineTaskToModify = m_taskRepository.findById(p_task.getId());
 
         if(v_deadLineTaskToModify.isPresent())
         {

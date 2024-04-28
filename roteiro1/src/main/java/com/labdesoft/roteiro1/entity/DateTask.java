@@ -1,29 +1,24 @@
 package com.labdesoft.roteiro1.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "dateTask")
+@PrimaryKeyJoinColumn(name = "date_Task_Id")
 @Schema(description = "Informações da tarefa do tipo de data definida")
 public class DateTask extends Task{
 
-    @Column(nullable = false)
+    @Column(nullable = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date taskDateEstimatedConclusion;
-
-    public DateTask(String p_title, String p_desc, Status p_status, Date p_taskDateEstimatedConclusion) {
-        super(p_title, p_desc, p_status);
-        this.taskDateEstimatedConclusion = p_taskDateEstimatedConclusion;
-    }
 
 }
