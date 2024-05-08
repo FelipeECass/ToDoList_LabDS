@@ -13,8 +13,8 @@ import lombok.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Schema(description = "Informações da tarefa")
 public class Task implements ITask {
-    public enum Status {
-        Pendente, Finalizada
+    public enum Priority{
+        Alta,Media,Baixa
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,7 @@ public class Task implements ITask {
     @Column(nullable = true)
     private String taskDesc;
     @Column(nullable = false)
-    private Status taskStatus;
+    private String taskStatus;
+    @Column(nullable = false)
+    private Priority taskPriority = Priority.Media;
 }

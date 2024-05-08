@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/deadLineTask")
@@ -28,6 +30,16 @@ public class DeadLineTaskController {
             List<DeadLineTask> v_listOfDeadLineTask = m_deadLineTaskService.getAllTask();
             if(v_listOfDeadLineTask == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            for(DeadLineTask v_dateTaskToChange : v_listOfDeadLineTask)
+            {
+                String v_status = v_dateTaskToChange.getTaskStatus();
+                Integer v_daysInTask = v_dateTaskToChange.getTaskDeadLine();
+
+                if(v_daysInTask < 0)
+                {
+                    v_dateTaskToChange.setTaskStatus(v_status + ", " + v_daysInTask * -1 + " dias de atraso.");
+                }
+            }
             return new ResponseEntity<>(v_listOfDeadLineTask, HttpStatus.OK);
         }
         catch(Exception ex)
