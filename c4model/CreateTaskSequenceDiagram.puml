@@ -1,0 +1,15 @@
+@startuml
+actor User
+participant "Sistema" as Sistema
+
+User -> Sistema: Adicionar Tarefa()
+Sistema -> User: Solicitar data de término ou dias de término
+alt Com data de término prevista
+    User -> Sistema: Informar data de término
+    Sistema -> Sistema: Adicionar tarefa com data de término prevista
+else Com dias de término previsto
+    User -> Sistema: Informar dias de término
+    Sistema -> Sistema: Adicionar tarefa com dias de término previsto
+end
+Sistema -> User: Confirmação de tarefa adicionada
+@enduml

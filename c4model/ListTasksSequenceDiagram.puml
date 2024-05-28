@@ -1,0 +1,18 @@
+@startuml
+actor User
+participant "Sistema" as Sistema
+
+User -> Sistema: Listar Tarefas()
+Sistema -> Sistema: Recuperar lista de tarefas
+Sistema -> User: Exibir lista de tarefas
+
+alt Setar tarefa como concluída
+    User -> Sistema: Setar tarefa como concluída
+    Sistema -> Sistema: Atualizar status da tarefa para concluída
+    Sistema -> User: Confirmação de status atualizado
+else Setar tarefa como pendente
+    User -> Sistema: Setar tarefa como pendente
+    Sistema -> Sistema: Atualizar status da tarefa para pendente
+    Sistema -> User: Confirmação de status atualizado
+end
+@enduml
