@@ -1,7 +1,6 @@
 package com.labdesoft.roteiro1.controller;
 
 import com.labdesoft.roteiro1.entity.DateTask;
-import com.labdesoft.roteiro1.entity.Task;
 import com.labdesoft.roteiro1.service.DateTaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
