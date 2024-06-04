@@ -4,14 +4,12 @@ import com.labdesoft.roteiro1.entity.Task;
 import com.labdesoft.roteiro1.service.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -23,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.*;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TaskControllerTest {
@@ -59,8 +56,8 @@ public class TaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].taskName", is("Test Task 1")))
-                .andExpect(jsonPath("$[1].taskName", is("Test Task 2")));
+                .andExpect(jsonPath("$[0].taskTitle", is("Test Task 1")))
+                .andExpect(jsonPath("$[1].taskTitle", is("Test Task 2")));
     }
 
     @Test
@@ -73,7 +70,7 @@ public class TaskControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/task")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("taskName", newTask.getTaskTitle())
+                        .param("taskTitle", newTask.getTaskTitle())
                         .param("taskStatus", newTask.getTaskStatus()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Task created"));
@@ -91,7 +88,7 @@ public class TaskControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/task")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("taskId", String.valueOf(updatedTask.getId()))
-                        .param("taskName", updatedTask.getTaskTitle())
+                        .param("taskTitle", updatedTask.getTaskTitle())
                         .param("taskStatus", updatedTask.getTaskStatus()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Task updated"));

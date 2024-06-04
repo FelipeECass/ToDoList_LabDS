@@ -58,46 +58,48 @@ public class DeadLineTaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].taskName", is("Test Task 1")))
-                .andExpect(jsonPath("$[1].taskName", is("Test Task 2")))
+                .andExpect(jsonPath("$[0].taskTitle", is("Test Task 1")))
+                .andExpect(jsonPath("$[1].taskTitle", is("Test Task 2")))
                 .andExpect(jsonPath("$[0].taskStatus", containsString("2 dias de atraso")))
                 .andExpect(jsonPath("$[1].taskStatus", is("Completed")));
     }
 
     @Test
     public void create_shouldCreateNewTask() throws Exception {
-        DeadLineTask newTask = new DeadLineTask();
-        newTask.setTaskTitle("New Task");
-        newTask.setTaskStatus("Pending");
-        newTask.setTaskDeadLine(3); // 3 days remaining
+        DeadLineTask v_newTask = new DeadLineTask();
+        v_newTask.setTaskTitle("New Task");
+        v_newTask.setTaskDesc("New Task Test");
+        v_newTask.setTaskStatus("Pending");
+        v_newTask.setTaskDeadLine(3); // 3 days remaining
 
         Mockito.when(deadLineTaskService.createTask(Mockito.any(DeadLineTask.class))).thenReturn("Task created");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/deadLineTask")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("taskName", newTask.getTaskTitle())
-                        .param("taskStatus", newTask.getTaskStatus())
-                        .param("taskDeadLine", String.valueOf(newTask.getTaskDeadLine())))
+                        .param("taskTitle", v_newTask.getTaskTitle())
+                        .param("taskDesc", v_newTask.getTaskDesc())
+                        .param("taskStatus", v_newTask.getTaskStatus())
+                        .param("taskDeadLine", v_newTask.getTaskDeadLine().toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Task created"));
     }
 
     @Test
     public void edit_shouldEditTaskStatus() throws Exception {
-        DeadLineTask updatedTask = new DeadLineTask();
-        updatedTask.setId(1);
-        updatedTask.setTaskTitle("Updated Task");
-        updatedTask.setTaskStatus("In Progress");
-        updatedTask.setTaskDeadLine(1); // 1 day remaining
+        DeadLineTask v_updatedTask = new DeadLineTask();
+        v_updatedTask.setId(1);
+        v_updatedTask.setTaskTitle("Updated Task");
+        v_updatedTask.setTaskStatus("In Progress");
+        v_updatedTask.setTaskDeadLine(1); // 1 day remaining
 
         Mockito.when(deadLineTaskService.editTask(Mockito.any(DeadLineTask.class))).thenReturn("Task updated");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/deadLineTask")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("taskId", String.valueOf(updatedTask.getId()))
-                        .param("taskName", updatedTask.getTaskTitle())
-                        .param("taskStatus", updatedTask.getTaskStatus())
-                        .param("taskDeadLine", String.valueOf(updatedTask.getTaskDeadLine())))
+                        .param("taskId", String.valueOf(v_updatedTask.getId()))
+                        .param("taskTitle", v_updatedTask.getTaskTitle())
+                        .param("taskStatus", v_updatedTask.getTaskStatus())
+                        .param("taskDeadLine", v_updatedTask.getTaskDeadLine().toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Task updated"));
     }
