@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { axiosInstance } from '../../common/axios-instance';
+import { AxiosResponse } from 'axios';
 
-export const TodoWrapperService = () => {
-    const [todos, setTodos] = useState([])
-    useEffect(() => {
-        const savedTodos = JSON.parse(localStorage.getItem('todos')) || [];
-        setTodos(savedTodos);
-    }, []);
-    return (
-        <div className='TodoWrapper'>
-            <h1>Lista de Tarefas! (Service)</h1>
-            <TodoForm />
-            {todos.map((todo, index) => (
-                <TodoList task={todo} key={index} />
-            ))}
-        </div>
-    )
-}
+const TodoWrapperService = async () => {
+  try {
+    const response = await axiosInstance.get('api/task'); // substitua 'URL_DA_API' pela URL real da sua API
+    console.log(response)
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export default TodoWrapperService;

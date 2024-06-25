@@ -1,34 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TodoForm } from './TodoForm';
 import { TodoList } from './TodoList';
 import { v4 as uuidv4 } from "uuid";
+import TodoWrapperService from './services/TodoWrapperService'
 
 export const TodoWrapper = () => {
     const [todos, setTodos] = useState([]);
-    const addTodo = (todo) => {
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await TodoWrapperService();
+                response.data.forEach((item) => {
+                    if (item.taskTitle) {
+                        addTodo(item.taskId, item.taskTitle, item.TaskStatus);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        }
+        fetchData();
+    }, [])
+
+    const addTodo = (id, title, status) => {
         setTodos([
             ...todos,
-            { id: uuidv4(), description: todo, completed: false },
+            { id: id, title: title, completed: status },
         ]);
     }
-    const deleteTodo = (id) => setTodos(todos.filter((todo) => todo.id !== id));
-    const editTodo = (id) => {
-        setTodos(
-            todos.map((todo) =>
-                todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo
-            )
-        );
-    }
+
     return (
         <div className='TodoWrapper'>
             <h1>Lista de Tarefas</h1>
             <TodoForm addTodo={addTodo} />
             {todos.map((todo) =>
                 <TodoList
-                    key={todo.id}
-                    task={todo}
-                    deleteTodo={deleteTodo}
-                    editTodo={editTodo}
+                    id={todo.id}
+                    title={todo.title}
+                    status={todo.completed}
                 />
             )
             }
